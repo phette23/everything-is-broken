@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>everything is broken | phette23</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+		<link rel="stylesheet" href="css/theme/custom.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section>
+					<h1>EVERYTHING IS BROKEN</h1>
+					<h2 class="lower italic">but by how much exactly?</h2>
+					<small>code4lib 2020 pittsburgh | eric phetteplace | <a href="https://twitter.com/phette23">@phette23</a> | california college of the arts</small>
+				</section>
+
+				<section>
+					impetus (broken links)
+				</section>
+
+				<section>
+					<h2>why do links break?</h2>
+					<ul>
+						<li>metadata</li>
+						<li>linking</li>
+						<li>content</li>
+					</ul>
+				</section>
+
+				<section>
+					report a broken link (shout out)
+				</section>
+
+				<section>
+					is this real life...or just reporting bias?
+				</section>
+
+				<section>
+					experiment: <a href="https://github.com/phette23/summon-broken-links">Summon broken links</a>
+				</section>
+
+				<section>
+					<h2>data</h2>
+					<ul>
+						<li>only 78.5% of links worked 😞</li>
+						<li>could eventually find full text for 54.5% of those</li>
+						<li>worst offenders: Magazine Articles (43%), Newspaper Articles (70%), OpenURL (63%), Nexis Uni (63%)</li>
+						<li>academic sources were more likely to work</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>what we're doing</h2>
+					<ul>
+						<li class="fragment"><em>cut toxic links out of your life</em></li>
+						<li class="fragment">work with vendor's support</li>
+						<li class="fragment">identify problematic content types</li>
+						<li class="fragment">identify problematic platforms</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>why it's hopeless</h2>
+					<ul>
+						<li class="fragment">my life and patience are finite</li>
+						<li class="fragment">incentive is to make <b>larger</b> indexes not functional ones</li>
+						<li class="fragment">vendors don't want to vet each others incoming links & blame each other rather than work to mutual solutions</li>
+						<li class="fragment">OpenURL assumes there's Universal Metadata that does not exist</li>
+						<li class="fragment">"can't do this / can't do that" even with perfect metadata</li>
+						<!-- @TODO find some examples from support tickets -->
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				controlsTutorial: false,
+				hash: true,
+				history: true,
+				dependencies: [
+					// { src: 'plugin/markdown/marked.js' },
+					// { src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,10 @@
+// overrides, utilities, etc.
+// nest everything under .reveal for specificity
+.reveal {
+    .italic {
+        font-style: italic;
+    }
+    .lower {
+        text-transform: lowercase;
+    }
+}
