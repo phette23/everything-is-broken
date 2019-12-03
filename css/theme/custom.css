@@ -1,3 +1,12 @@
+.reveal b {
+  font-weight: bold; }
+
+.reveal blockquote {
+  text-align: left; }
+
+.reveal i {
+  font-style: italic; }
+
 .reveal .italic {
   font-style: italic; }
 

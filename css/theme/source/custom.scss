@@ -1,6 +1,18 @@
 // overrides, utilities, etc.
 // nest everything under .reveal for specificity
 .reveal {
+    b {
+        font-weight: bold;
+    }
+
+    blockquote {
+        text-align: left;
+    }
+
+    i {
+        font-style: italic;
+    }
+
     .italic {
         font-style: italic;
     }

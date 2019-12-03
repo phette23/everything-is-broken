@@ -34,7 +34,7 @@
 				</section>
 
 				<section>
-					impetus (broken links)
+					<h2>impetus (broken links)</h2>
 				</section>
 
 				<section>
@@ -47,15 +47,27 @@
 				</section>
 
 				<section>
-					report a broken link (shout out)
+					<h2>report a broken link</h2>
+					<!-- @TODO diagram of app:
+					JS in Summon -> Python app as part of Django/Wagtail site -> Google Sheet -->
+					<p>Shout out to Robert Hoyt & Fairfield University, who provided code and the general architecture for this.</p>
 				</section>
 
 				<section>
-					is this real life...or just reporting bias?
+					<h2>is this real life...or just reporting bias?</h2>
 				</section>
 
 				<section>
-					experiment: <a href="https://github.com/phette23/summon-broken-links">Summon broken links</a>
+					<h2>
+						experiment: <a href="https://github.com/phette23/summon-broken-links">Summon broken links</a>
+					</h2>
+					<p>a series of Node scripts to</p>
+					<ol>
+						<li>randomly select queries from real user data</li>
+						<li>obtain search results for those queries</li>
+						<li>test result links for resolution</li>
+						<li>compile summary statistics</li>
+					</ol>
 				</section>
 
 				<section>
@@ -64,17 +76,28 @@
 						<li>only 78.5% of links worked 😞</li>
 						<li>could eventually find full text for 54.5% of those</li>
 						<li>worst offenders: Magazine Articles (43%), Newspaper Articles (70%), OpenURL (63%), Nexis Uni (63%)</li>
-						<li>academic sources were more likely to work</li>
+						<li>academic sources & direct linking (98%) were more likely to work</li>
 					</ul>
+				</section>
+
+				<section>
+					<h2>little has changed</h2>
+					<blockquote cite="https://ejournals.bc.edu/index.php/ital/article/view/5607">
+						<p><small>The number of problems discovered in full-text items that are linked via an OpenURL is discouraging; however, the ability of the Summon Discovery Service to provide accurate access to full text is an overall positive because of its direct link functionality. More than 95% of direct-linked articles in our research led to the correct resource. One-click (OpenURL) resolution was noticeably poorer, with about 60% of requests leading directly to the correct full-text item. More alarming, we found that, of full-text requests linked through an OpenURL, a large portion—20%—fail.</small></p>
+						<footer>
+							—<cite>"Measuring Journal Linking Success from a Discovery Service" Stuart, K., Varnum, K., & Ahronheim, J. (2015)</cite>
+						</footer>
+					</blockquote>
 				</section>
 
 				<section>
 					<h2>what we're doing</h2>
 					<ul>
+						<li class="fragment">work with vendor's support, try to be systematic</li>
 						<li class="fragment"><em>cut toxic links out of your life</em></li>
-						<li class="fragment">work with vendor's support</li>
-						<li class="fragment">identify problematic content types</li>
-						<li class="fragment">identify problematic platforms</li>
+						<li class="fragment">identify & avoid problematic
+							<ul><li class="fragment">content types (Book Reviews)</li>
+							<li class="fragment">platforms (EBSCO, Nexis Uni)</li></ul>
 					</ul>
 				</section>
 
@@ -87,6 +110,17 @@
 						<li class="fragment">OpenURL assumes there's Universal Metadata that does not exist</li>
 						<li class="fragment">"can't do this / can't do that" even with perfect metadata</li>
 						<!-- @TODO find some examples from support tickets -->
+					</ul>
+				</section>
+
+				<section>
+					<h2>References & Links</h2>
+					<ul>
+						<li><strong>These slides: <a href="https://phette.net/eib">phette.net/eib</a></strong></li>
+						<li>Me: @phette23 everywhere (gmail, Twitter, GitHub)</li>
+						<li>Fairfield University <a href="https://libraryapps.fairfield.edu/cdn/brokenlinks.zip">Broken Links app</a>, Robert Hoyt</li>
+						<li><a href="https://github.com/phette23/summon-broken-links">Summon Broken Links</a> on GitHub</li>
+						<li>Stuart, K., Varnum, K., & Ahronheim, J. (2015). Measuring Journal Linking Success from a Discovery Service. <i>Information Technology and Libraries (Online)</i>; Chicago, 34(1), 52–76. <a href="https://ejournals.bc.edu/index.php/ital/article/view/5607">https://ejournals.bc.edu/index.php/ital/article/view/5607</a></li>
 					</ul>
 				</section>
 			</div>
