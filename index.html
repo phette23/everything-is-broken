@@ -34,23 +34,31 @@
 				</section>
 
 				<section>
-					<h2>impetus (broken links)</h2>
-				</section>
-
-				<section>
-					<h2>why do links break?</h2>
-					<ul>
-						<li>metadata</li>
-						<li>linking</li>
-						<li>content</li>
-					</ul>
+					<h2>Broken Full Text Links</h2>
+					<img src="img/butterfly-meme.jpg" alt="Man looks at butterfly that says '404 page not found' and asks 'is this full text?'">
 				</section>
 
 				<section>
 					<h2>report a broken link</h2>
-					<!-- @TODO diagram of app:
-					JS in Summon -> Python app as part of Django/Wagtail site -> Google Sheet -->
-					<p>Shout out to Robert Hoyt & Fairfield University, who provided code and the general architecture for this.</p>
+					<p><img style="max-height: 460px" src="img/report-flow.svg" alt="Diagram of a broken link report: from Summon form to Wagtail app to Google Spreadsheet"></p>
+					<p class="small-font">Shout out to Robert Hoyt & Fairfield University, who provided code and the general architecture for this. Code: <a href="https://github.com/cca/libraries_branding/blob/master/summon/broken-link-modal.js">Summon JS</a> | <a href="https://github.com/cca/libraries_wagtail/tree/master/libraries/brokenlinks">Wagtail "broken links" app</a></p>
+				</section>
+
+				<section data-state="why-do-links-break">
+					<h2>why do links break?</h2>
+					<ul class="columns js-reasons-list small-font">
+						<li>metadata mismatch between DL index and an uncooperative content provider</li>
+						<li class="fragment">metadata mismatch between DL index record from one source and provider content from another</li>
+						<li class="fragment">granularity mismatch: DL index and provider disagree about whether a section should be one or many articles (often occurs with book reviews, letters to the editor, etc.)</li>
+						<li class="fragment">limitations of openURL linking: destination database cannot use all openURL metadata fields and the ones available don't uniquely identify the article</li>
+						<li class="fragment">links are title-level only making it hard for users to find full text</li>
+						<li class="fragment">content doesn't exist in the source even though it should</li>
+						<li class="fragment">content doesn't exist in the source due to embargo with the naïve knowledge base doesn't know about</li>
+						<li class="fragment">we configured EZproxy wrong or didn't add a database stanza yet</li>
+						<li class="fragment">we configured our rights statements wrong & said he have/don't have a database when that's not the case</li>
+						<li class="fragment">we deleted a catalog record but our local holdings haven't updated in the DL index yet</li>
+					</ul>
+					<p class="fragment">Problem origins: us, the discovery layer, content providers, metadata providers.</p>
 				</section>
 
 				<section>
@@ -71,12 +79,13 @@
 				</section>
 
 				<section>
-					<h2>data</h2>
+					<h2>results</h2>
 					<ul>
 						<li>only 78.5% of links worked 😞</li>
-						<li>could eventually find full text for 54.5% of those</li>
-						<li>worst offenders: Magazine Articles (43%), Newspaper Articles (70%), OpenURL (63%), Nexis Uni (63%)</li>
-						<li>academic sources & direct linking (98%) were more likely to work</li>
+						<li>eventually found full text for 54.5% of broken links</li>
+						<li>worst offenders: Magazine Articles (43%), Newspaper Articles (70%), Nexis Uni (63%)</li>
+						<li>traditional academic sources faired better</li>
+						<li>striking contrast: direct linking (98%) versus openURL (63%)</li>
 					</ul>
 				</section>
 
@@ -94,10 +103,15 @@
 					<h2>what we're doing</h2>
 					<ul>
 						<li class="fragment">work with vendor's support, try to be systematic</li>
-						<li class="fragment"><em>cut toxic links out of your life</em></li>
+						<ul>
+							<li class="fragment">change of linking strategy: pass <i>only numeric metadata</i> (volume, issue, ISSN) & omit title</li>
+						</ul>
+						<li class="fragment"><em>cut toxic links out of your life</em> 🤢</li>
 						<li class="fragment">identify & avoid problematic
-							<ul><li class="fragment">content types (Book Reviews)</li>
-							<li class="fragment">platforms (EBSCO, Nexis Uni)</li></ul>
+						<ul>
+							<li class="fragment">content types (Book Reviews)</li>
+							<li class="fragment">platforms (EBSCO, Nexis Uni)</li>
+						</ul>
 					</ul>
 				</section>
 
@@ -105,18 +119,18 @@
 					<h2>why it's hopeless</h2>
 					<ul>
 						<li class="fragment">my life and patience are finite</li>
-						<li class="fragment">incentive is to make <b>larger</b> indexes not functional ones</li>
+						<li class="fragment">incentive is to make <b>larger and larger</b> indexes not functional, tested ones</li>
 						<li class="fragment">vendors don't want to vet each others incoming links & blame each other rather than work to mutual solutions</li>
-						<li class="fragment">OpenURL assumes there's Universal Metadata that does not exist</li>
-						<li class="fragment">"can't do this / can't do that" even with perfect metadata</li>
-						<!-- @TODO find some examples from support tickets -->
+						<li class="fragment">OpenURL assumes Universal Metadata that does not exist</li>
+						<li class="fragment">linking "can't do this / can't do that" even with perfect metadata</li>
+						<!-- @TODO find some examples from support tickets? -->
 					</ul>
 				</section>
 
 				<section>
 					<h2>References & Links</h2>
 					<ul>
-						<li><strong>These slides: <a href="https://phette.net/eib">phette.net/eib</a></strong></li>
+						<li><strong>These slides: <a href="https://phette.net/broken">phette.net/broken</a></strong></li>
 						<li>Me: @phette23 everywhere (gmail, Twitter, GitHub)</li>
 						<li>Fairfield University <a href="https://libraryapps.fairfield.edu/cdn/brokenlinks.zip">Broken Links app</a>, Robert Hoyt</li>
 						<li><a href="https://github.com/phette23/summon-broken-links">Summon Broken Links</a> on GitHub</li>
@@ -142,7 +156,24 @@
 					{ src: 'plugin/notes/notes.js', async: true },
 					{ src: 'plugin/highlight/highlight.js', async: true }
 				]
-			});
+			})
+			function randIntBetween(low, high) {
+				return Math.round(Math.random() * (high - low) + low)
+			}
+
+			// make the "why links break" list items wild
+			document.querySelectorAll('.js-reasons-list li').forEach((li, idx) => {
+				// random rotate, translate on items, need translateZ to get text to show
+				if (idx > 1) li.style.transform = `rotate(${[1, -1][randIntBetween(0, 1)] * randIntBetween(1, 30)}deg) translateZ(1px)`
+				if (idx > 2) li.style.transform += ` translate(${randIntBetween(1, 30)}px, ${randIntBetween(1, 30)}px)`
+				// spONgEbOb TExT
+				if (idx > 4) {
+					let t = li.textContent
+					li.textContent = t.split('').map(char => {
+						return (randIntBetween(0, 1) ? char.toUpperCase() : char.toLowerCase())
+					}).join('')
+				}
+			})
 		</script>
 	</body>
 </html>

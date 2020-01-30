@@ -6,6 +6,7 @@
     }
 
     blockquote {
+        box-shadow: none;
         text-align: left;
     }
 
@@ -18,5 +19,13 @@
     }
     .lower {
         text-transform: lowercase;
+    }
+    .small-font {
+        font-size: 50%;
+    }
+
+    .columns {
+        column-count: 2;
+        column-gap: 20px;
     }
 }
