@@ -27,10 +27,11 @@
 		<div class="reveal">
 			<div class="slides">
 
-				<section>
+				<section data-state="bg-fade" data-background="img/rubbish.jpg">
 					<h1>EVERYTHING IS BROKEN</h1>
 					<h2 class="lower italic">but by how much exactly?</h2>
-					<small>code4lib 2020 pittsburgh | eric phetteplace | <a href="https://twitter.com/phette23">@phette23</a> | california college of the arts</small>
+					<p><b><small>code4lib 2020 pittsburgh | eric phetteplace | <a href="https://twitter.com/phette23">@phette23</a> | california college of the arts</small></b></p>
+					<p class="photoref"><a href="https://unsplash.com/@antoinegiret?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Antoine GIRET"><span style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-2px;fill:white" viewBox="0 0 32 32"><title>unsplash-logo</title><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg></span><span style="display:inline-block;padding:2px 3px">Antoine GIRET</span></a></p>
 				</section>
 
 				<section>
@@ -41,7 +42,7 @@
 				<section>
 					<h2>report a broken link</h2>
 					<p><img style="max-height: 460px" src="img/report-flow.svg" alt="Diagram of a broken link report: from Summon form to Wagtail app to Google Spreadsheet"></p>
-					<p class="small-font">Shout out to Robert Hoyt & Fairfield University, who provided code and the general architecture for this. Code: <a href="https://github.com/cca/libraries_branding/blob/master/summon/broken-link-modal.js">Summon JS</a> | <a href="https://github.com/cca/libraries_wagtail/tree/master/libraries/brokenlinks">Wagtail "broken links" app</a></p>
+					<p class="small-font">Shout out to Robert Hoyt & Fairfield University, who provided code and the general architecture for this.<br>Code: <a href="https://github.com/cca/libraries_branding/blob/master/summon/broken-link-modal.js">Summon JS</a> | <a href="https://github.com/cca/libraries_wagtail/tree/master/libraries/brokenlinks">Wagtail "broken links" app</a></p>
 				</section>
 
 				<section data-state="why-do-links-break">
@@ -58,12 +59,11 @@
 						<li class="fragment">we configured our rights statements wrong & said he have/don't have a database when that's not the case</li>
 						<li class="fragment">we deleted a catalog record but our local holdings haven't updated in the DL index yet</li>
 					</ul>
-					<p style="margin-top: 40px; font-weight: bold; color: maroon;" class="fragment"><small>Problem origins: us, discovery layer, content providers, metadata providers.</small></p>
 				</section>
 
 				<section data-background="img/calm-sea.jpg">
 					<h2 style="color:#fff; font-style: italic;"><span style="font-family: cursive;">is this real life...</span><br><br><br><br>or just reporting bias?</h2>
-					<p style="position: relative; bottom: -2em;"><a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px" href="https://unsplash.com/@unleashedagency?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Unleashed Agency"><span style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-2px;fill:white" viewBox="0 0 32 32"><title>unsplash-logo</title><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg></span><span style="display:inline-block;padding:2px 3px">Unleashed Agency</span></a></p>
+					<p class="photoref"><a href="https://unsplash.com/@unleashedagency?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Unleashed Agency"><span style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-2px;fill:white" viewBox="0 0 32 32"><title>unsplash-logo</title><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg></span><span style="display:inline-block;padding:2px 3px">Unleashed Agency</span></a></p>
 				</section>
 
 				<section>
@@ -106,9 +106,15 @@
 						<li class="fragment">identify & avoid problematic
 						<ul>
 							<li class="fragment">content types (Book Reviews)</li>
-							<li class="fragment">platforms (EBSCO, Nexis Uni)</li>
+							<li class="fragment">platforms (Nexis Uni)</li>
 						</ul>
 					</ul>
+				</section>
+
+				<section>
+					<h1>Problem Origins</h1>
+					<img src="img/standoff.gif" alt="Scene from The Office where Dwight, Andy, & Michael are in a finger guns standoff">
+					<p style="font-size:120%"><b>us, discovery layer, content providers, metadata providers</b></p>
 				</section>
 
 				<section>
@@ -116,8 +122,8 @@
 					<ul>
 						<li class="fragment">my life and patience are finite</li>
 						<li class="fragment">incentive is to make <b>larger and larger</b> indexes not functional, tested ones</li>
-						<li class="fragment">vendors don't want to vet each others incoming links & blame each other rather than work to mutual solutions</li>
-						<li class="fragment">OpenURL assumes Universal Metadata that does not exist</li>
+						<li class="fragment">vendors won't vet each others' linking & blame each other rather than work to mutual solutions</li>
+						<li class="fragment">OpenURL assumes universal metadata which doesn't exist</li>
 						<li class="fragment">linking "can't do this / can't do that" even with perfect metadata</li>
 						<!-- @TODO find some examples from support tickets? -->
 					</ul>

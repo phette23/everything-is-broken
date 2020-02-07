@@ -1,3 +1,6 @@
+html.bg-fade .slide-background {
+  opacity: 0.35 !important; }
+
 .reveal b {
   font-weight: bold; }
 
@@ -23,6 +26,21 @@
 .reveal .columns {
   column-count: 2;
   column-gap: 20px; }
+
+.reveal .photoref {
+  position: relative;
+  bottom: -2em; }
+  .reveal .photoref a {
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    padding: 4px 6px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.2;
+    display: inline-block;
+    border-radius: 3px; }
 
 .c3-xgrid-focus {
   display: none; }
