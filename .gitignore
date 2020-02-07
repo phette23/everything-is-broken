@@ -11,3 +11,7 @@ node_modules/
 .sass-cache
 css/reveal.min.css
 js/reveal.min.js
+bower_components/
+!bower_components/c3/c3.min.css
+!bower_components/c3/c3.min.js
+!bower_components/d3/d3.min.js

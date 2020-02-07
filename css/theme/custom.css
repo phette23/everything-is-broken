@@ -14,9 +14,15 @@
 .reveal .lower {
   text-transform: lowercase; }
 
+.reveal .red line {
+  stroke: red; }
+
 .reveal .small-font {
   font-size: 50%; }
 
 .reveal .columns {
   column-count: 2;
   column-gap: 20px; }
+
+.c3-xgrid-focus {
+  display: none; }

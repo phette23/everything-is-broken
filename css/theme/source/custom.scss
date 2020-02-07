@@ -20,6 +20,12 @@
     .lower {
         text-transform: lowercase;
     }
+    // for average line through bar chart
+    .red {
+        line {
+            stroke: red;
+        }
+    }
     .small-font {
         font-size: 50%;
     }
@@ -28,4 +34,8 @@
         column-count: 2;
         column-gap: 20px;
     }
+}
+
+.c3-xgrid-focus {
+    display: none;
 }

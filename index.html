@@ -58,16 +58,17 @@
 						<li class="fragment">we configured our rights statements wrong & said he have/don't have a database when that's not the case</li>
 						<li class="fragment">we deleted a catalog record but our local holdings haven't updated in the DL index yet</li>
 					</ul>
-					<p class="fragment">Problem origins: us, the discovery layer, content providers, metadata providers.</p>
+					<p style="margin-top: 40px; font-weight: bold; color: maroon;" class="fragment"><small>Problem origins: us, discovery layer, content providers, metadata providers.</small></p>
 				</section>
 
-				<section>
-					<h2>is this real life...or just reporting bias?</h2>
+				<section data-background="img/calm-sea.jpg">
+					<h2 style="color:#fff; font-style: italic;"><span style="font-family: cursive;">is this real life...</span><br><br><br><br>or just reporting bias?</h2>
+					<p style="position: relative; bottom: -2em;"><a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px" href="https://unsplash.com/@unleashedagency?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Unleashed Agency"><span style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-2px;fill:white" viewBox="0 0 32 32"><title>unsplash-logo</title><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg></span><span style="display:inline-block;padding:2px 3px">Unleashed Agency</span></a></p>
 				</section>
 
 				<section>
 					<h2>
-						experiment: <a href="https://github.com/phette23/summon-broken-links">Summon broken links</a>
+						<a href="https://github.com/phette23/summon-broken-links">broken links experiment</a>
 					</h2>
 					<p>a series of Node scripts to</p>
 					<ol>
@@ -80,13 +81,8 @@
 
 				<section>
 					<h2>results</h2>
-					<ul>
-						<li>only 78.5% of links worked 😞</li>
-						<li>eventually found full text for 54.5% of broken links</li>
-						<li>worst offenders: Magazine Articles (43%), Newspaper Articles (70%), Nexis Uni (63%)</li>
-						<li>traditional academic sources faired better</li>
-						<li>striking contrast: direct linking (98%) versus openURL (63%)</li>
-					</ul>
+					<div class="results-chart"></div>
+					<p>Only 78.5% worked 😡<br><span class="fragment">eventually located full text for 54.5% of broken links.</span></p>
 				</section>
 
 				<section>
@@ -131,17 +127,16 @@
 					<h2>References & Links</h2>
 					<ul>
 						<li><strong>These slides: <a href="https://phette.net/broken">phette.net/broken</a></strong></li>
-						<li>Me: @phette23 everywhere (gmail, Twitter, GitHub)</li>
-						<li>Fairfield University <a href="https://libraryapps.fairfield.edu/cdn/brokenlinks.zip">Broken Links app</a>, Robert Hoyt</li>
+						<li>Me: @phette23 everywhere (Gmail, Twitter, GitHub)</li>
+						<li>Fairfield University <a href="https://libraryapps.fairfield.edu/cdn/brokenlinks.zip">Broken Links app</a> by Robert Hoyt</li>
 						<li><a href="https://github.com/phette23/summon-broken-links">Summon Broken Links</a> on GitHub</li>
-						<li>Stuart, K., Varnum, K., & Ahronheim, J. (2015). Measuring Journal Linking Success from a Discovery Service. <i>Information Technology and Libraries (Online)</i>; Chicago, 34(1), 52–76. <a href="https://ejournals.bc.edu/index.php/ital/article/view/5607">https://ejournals.bc.edu/index.php/ital/article/view/5607</a></li>
+						<li>Stuart, K., Varnum, K., & Ahronheim, J. (2015). <a href="https://ejournals.bc.edu/index.php/ital/article/view/5607">Measuring Journal Linking Success from a Discovery Service</a>. <i>Information Technology and Libraries</i>; Chicago, 34(1), 52–76.</li>
 					</ul>
 				</section>
 			</div>
 		</div>
 
 		<script src="js/reveal.js"></script>
-
 		<script>
 			// More info about config & dependencies:
 			// - https://github.com/hakimel/reveal.js#configuration
@@ -174,6 +169,61 @@
 					}).join('')
 				}
 			})
+		</script>
+		<!-- Load c3 -->
+		<link href="/bower_components/c3/c3.min.css" rel="stylesheet">
+		<script src="/bower_components/d3/d3.min.js" charset="utf-8"></script>
+		<script src="/bower_components/c3/c3.min.js"></script>
+		<script>
+		c3.generate({
+				bindto: '.results-chart',
+				data: {
+				    columns: [
+						['Magazines', 42.9],
+						['Nexis Uni', 62.9],
+						['Newspapers', 69.5],
+						['Journal Article', 82.1],
+						['ProQuest', 87.7],
+						['Reference', 95.2],
+						['OpenURL', 62.5],
+						['DirectLink', 97.7],
+					],
+					type: "bar",
+				},
+				axis: {
+					x: {
+						show: false,
+					},
+					y: {
+						label: {
+							text: "percent success",
+							position: "outer middle",
+						},
+						max: 100,
+						padding: 0,
+					},
+				},
+				bar: {
+					space: 0.2,
+					width: {
+						ratio: 0.5,
+					},
+				},
+				grid: {
+					y: {
+						lines: [
+							{ value: 78.5, text: 'average for all results', class: 'red' },
+						],
+					},
+				},
+				tooltip: {
+					format: {
+						title: (d) => null,
+						value: (value, ratio, id) => d3.format('.1%')(value / 100),
+					},
+				},
+			}
+		);
 		</script>
 	</body>
 </html>
