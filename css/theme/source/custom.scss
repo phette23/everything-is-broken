@@ -26,9 +26,12 @@ html.bg-fade .slide-background {
         text-transform: lowercase;
     }
     // for average line through bar chart
-    .red {
+    .avg-line {
         line {
             stroke: red;
+        }
+        text {
+            fill: black;
         }
     }
     .small-font {
