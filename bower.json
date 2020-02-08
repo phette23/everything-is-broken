@@ -20,5 +20,8 @@
     "node_modules",
     "bower_components",
     "test"
-  ]
+  ],
+  "dependencies": {
+    "c3": "^0.7.13"
+  }
 }
