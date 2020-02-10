@@ -17,8 +17,11 @@ html.bg-fade .slide-background {
 .reveal .lower {
   text-transform: lowercase; }
 
-.reveal .red line {
+.reveal .avg-line line {
   stroke: red; }
+
+.reveal .avg-line text {
+  fill: black; }
 
 .reveal .small-font {
   font-size: 50%; }
