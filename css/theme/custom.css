@@ -11,6 +11,13 @@ html.bg-fade .slide-background {
 .reveal i {
   font-style: italic; }
 
+.reveal .bscode {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border-radius: 4px; }
+
 .reveal .italic {
   font-style: italic; }
 
