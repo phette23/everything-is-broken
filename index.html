@@ -87,7 +87,7 @@
 					<h2>results</h2>
 					<div class="results-chart"></div>
 					<p>Only 78.5% worked 😡<br><span class="fragment">eventually located full text for 54.5% of broken links.</span></p>
-					<p><small>±3.72% with a 95% confidence level</small></p>
+					<p><small>±3.72% with a 95% confidence level, N = 469</small></p>
 				</section>
 
 				<section>
@@ -117,11 +117,28 @@
 					<ul>
 						<li>the finite nature of human life and patience</li>
 						<li class="fragment">vendors won't vet each others' linking & blame each other rather than work to mutual solutions (<a href="https://www.niso.org/standards-committees/odi">ODI</a>)</li>
-						<li class="fragment">their incentive is to make <b>larger and larger</b> indexes when they can't even test if they're functional</li>
-						<li class="fragment">OpenURL assumes universal access to accurate metadata</li>
-						<li class="fragment">OpenURL linking has platform-specific limitations even if the DL index has perfect metadata</li>
+						<li class="fragment">their incentive is to make <b>larger and larger</b> indexes when they can't even test if they're functional
+							<ul>
+								<li class="fragment">size is itself a technical obstacle to integrity</li>
+								<li class="fragment">breadth of potential errors is such that human intervention will often be necessary</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>OpenURL is broken</h2>
+					<ul>
+						<li>assumes universal access to accurate metadata</li>
+						<li class="fragment">there are platform-specific limitations <strong>even if an index has perfect metadata</strong>
+							<ul>
+								<li class="fragment">example: it's impossible for metadata to uniquely identify certain articles in Nexis Uni, which uses only publication and title (no date)</li>
+							</ul>
+						</li>
+						<li class="fragment">resolvers fail gracelessly</li>
 						<!-- @TODO find some examples from support tickets? -->
 					</ul>
+					<p><small>Aside: I actually like OpenURL, it's an elegant standard being asked to do too much and implementations are failing.</small></p>
 				</section>
 
 				<section>
@@ -132,6 +149,7 @@
 							—<cite>"Measuring Journal Linking Success from a Discovery Service" Stuart, K., Varnum, K., & Ahronheim, J. (2015)</cite>
 						</footer>
 					</blockquote>
+					<!-- perhaps have the aside about expending my labor to fix vendor problems here -->
 				</section>
 
 				<section>
