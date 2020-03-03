@@ -26,8 +26,7 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-
-				<section data-state="bg-fade" data-background="img/rubbish.jpg">
+				<section data-background-opacity="0.35" data-background="img/rubbish.jpg">
 					<h1>EVERYTHING IS BROKEN</h1>
 					<h2 class="lower italic">but by how much exactly?</h2>
 					<p><b><small>code4lib 2020 pittsburgh | eric phetteplace | <a href="https://twitter.com/phette23">@phette23</a> | california college of the arts</small></b></p>
@@ -37,33 +36,62 @@
 				<section>
 					<h2>Broken Full Text Links</h2>
 					<img src="img/butterfly-meme.jpg" alt="Man looks at butterfly that says '404 page not found' and asks 'is this full text?'">
+
+                    <aside class="notes" data-markdown>
+I'm specifically talking about full text links in your discovery layer, because when you click "full text online" the discovery layer doesn't actually _know_ what will happen on the other end. You might be sent straight to a PDF or straight to a 404 page.
+                    </aside>
 				</section>
 
 				<section>
 					<h2>report a broken link</h2>
 					<p><img style="max-height: 460px" src="img/report-flow.svg" alt="Diagram of a broken link report: from Summon form to Wagtail app to Google Spreadsheet"></p>
 					<p class="small-font">Shout out to Robert Hoyt & Fairfield University, who provided code and the general architecture for this.<br>Code: <a href="https://github.com/cca/libraries_branding/blob/master/summon/broken-link-modal.js">Summon JS</a> | <a href="https://github.com/cca/libraries_wagtail/tree/master/libraries/brokenlinks">Wagtail "broken links" app</a></p>
+
+                    <aside class="notes" data-markdown>
+When we first noticed these broken links, our approach was to enable users to report when they encounter one. I added custom client-side JavaScript to our Summon instance that inserts an additional "report broken link" feature just after the full text link. When a user selects it, a small pop-up dialog asks for an optional email address and description. When they submit it, that information along with the link's OpenURL is POSTed via AJAX to a small web app living on our website, which is a Django site using the Wagtail CMS. This app records the data and pushes it into a spreadsheet, where it's easy for me to manage, parse the OpenURL metadata, and classify the reported problems.
+Big shout out to Robery Hoyt & Fairfield University, who first developed this approach. I had asked Summon's support about how to set this up and they pointed me in his direction.
+                    </aside>
 				</section>
 
 				<section data-state="why-do-links-break">
 					<h2>why do links break?</h2>
 					<ul class="columns js-reasons-list small-font">
-						<li>metadata mismatch between DL index and an uncooperative content provider</li>
-						<li class="fragment">metadata mismatch between DL index record from one source and provider content from another</li>
-						<li class="fragment">granularity mismatch: DL index and provider disagree about whether a section should be one or many articles (often occurs with book reviews, letters to the editor, etc.)</li>
-						<li class="fragment">limitations of openURL linking: destination database cannot use all openURL metadata fields and the ones available don't uniquely identify the article</li>
-						<li class="fragment">links are title-level only making it hard for users to find full text</li>
-						<li class="fragment">content doesn't exist in the source even though it should</li>
-						<li class="fragment">content doesn't exist in the source due to embargo with the naïve knowledge base doesn't know about</li>
-						<li class="fragment">we configured EZproxy wrong or didn't add a database stanza yet</li>
-						<li class="fragment">we configured our rights statements wrong & said he have/don't have a database when that's not the case</li>
-						<li class="fragment">we deleted a catalog record but our local holdings haven't updated in the DL index yet</li>
+						<li class="fragment"><strong>inaccurate metadata</strong> in the DL index</li>
+                        <li class="fragment"><strong>inaccurate metadata</strong> in the content provider database, causing a mismatch with the DL index</li>
+                        <li class="fragment"><strong>a disagreement</strong> between DL index and content provider over geuinely debatable metadata values, such as the title of a book review</li>
+						<li class="fragment">a <strong>granularity mismatch</strong>: DL index and provider disagree about whether a section should be one or many articles</li>
+                        <li class="fragment">the content provider has a poor <strong>openURL implementation</strong>, causing a link to fail due to unused or missing metadata fields</li>
+						<li class="fragment"><strong>title-level links</strong> that do not go to the full text</li>
+						<li class="fragment"><strong>missing content</strong>, the content provider doesn't have an item even though it should</li>
+						<li class="fragment">an item is under <strong>embargo</strong> and the DL's naïve knowledge base doesn't account for that</li>
+						<li class="fragment">we <strong>misconfigured EZproxy</strong> wrong</li>
+						<li class="fragment">we <strong>misconfigured our knowledge base</strong>, our rights statements are wrong</li>
+						<li class="fragment">we deleted a catalog record but our <strong>local holdings haven't synced</strong> with the DL index yet</li>
 					</ul>
+
+                    <aside class="notes" data-markdown>
+So why do links break? I've collected a list of common problems from our reports and there are a lot so I'm going to speed through them.
+- inaccurate metadata in the DL index
+- inaccurate metadata in the content provider database, causing a mismatch with the DL index
+- a disagreement between DL index and content provider over geuinely debatable metadata values, such as the title of a book review. Should it be "Review: Book Title" or simply "Book Title"?
+- a granularity mismatch: the DL index and the content provider disagree about whether something should be one or many items. Consider a "letters to the editor" segment; the DL might have one item while the content provider has a distinct article for each letter.
+- the content provider can have a poor openURL implementation, causing a link to fail due to unused or misused metadata
+- title-level links do not go to the full text. Our users land on a journal index, and while it's easy for some researchers to navigate from there, most users aren't expecting this. They clicked something that said "full text" not a link that said "I hope you memorized the article's volume and issue cuz you're gonna need them"
+- missing content, the content provider doesn't have an item even though it should
+- an item is under embargo and the DL's naïve knowledge base doesn't account for that
+- we misconfigured EZproxy. Yeah, sometimes we're the ones that screw up.
+- we misconfigured our knowledge base, our rights statements are wrong
+- we deleted a catalog record but our local holdings haven't synced with the DL index yet. We manually sync deletions and it can take up a month to have them reflected in the DL.
+                    </aside>
 				</section>
 
 				<section data-background="img/calm-sea.jpg">
 					<h2 style="color:#fff; font-style: italic;"><span style="font-family: cursive;">is this real life...</span><br><br><br><br>or just reporting bias?</h2>
 					<p class="photoref"><a href="https://unsplash.com/@unleashedagency?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Unleashed Agency"><span style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-2px;fill:white" viewBox="0 0 32 32"><title>unsplash-logo</title><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg></span><span style="display:inline-block;padding:2px 3px">Unleashed Agency</span></a></p>
+
+                    <aside class="notes" data-markdown>
+So as I sat awash in this sea of issues I started to wonder...does it seem so bad because I'm only getting the reports of _broken_ links? Surely 99% of our links work and I'm just seeing the worst one percent. I wanted to find out exactly how bad the situation was by doing an objective review of how often our discovery layer's full text links resolved and the most problematic content types were.
+                    </aside>
 				</section>
 
 				<section>
@@ -77,17 +105,65 @@
 						<li>test result links for resolution</li>
 						<li>compile summary statistics</li>
 					</ol>
+
+                    <aside class="notes" data-markdown>
+I wrote a series of Node scripts to help me investigate. I took thousands of actual user queries and randomly selected fifty to study. I used the Summon API to obtain search result metadata for these queries. My project then iterates through the first ten search results, opens their links in a browser where I record if they resolve properly and, if not, the general nature of their failure. Finally, the project spits out summary statistics after all the search results are reviewed.
+                    </aside>
 				</section>
 
 				<section>
-					<h2>slide showing me walking through the steps here?</h2>
+                    <h2>example: reviewing links</h2>
+					<img src="img/broken-links-cli.png" alt="Summon broken link review in action">
+
+                    <aside class="notes" data-markdown>
+Here's what it looks like as I run the project. You can see the title and author of the first query's first result are printed out and I've entered in the destination URL that Summon took me to, then a couple boolean values describing whether it was the full text and whether I could _eventually_ find the full text from the destination URL. When I finish entering data for the first result, the title and author of the second are printed out and its URL is opened in a new browser window.
+                    </aside>
 				</section>
+
+                <section>
+                    <pre><code data-trim>
+{
+    "ContentType": [ "Journal Article" ],
+    "hasFullText": true,
+    "inHoldings": true,
+    "isFullTextHit": false,
+    "IsPeerReviewed": [ "true" ],
+    "isPrint": false,
+    "IsScholarly": [ "true" ],
+    "LinkModel": [ "DirectLink" ],
+    "PublicationCentury": [ "2000" ],
+    "PublicationDecade": [ "2010" ],
+    "SourceID": [ "proquest", "crossref" ],
+    "SourceType": [ "Aggregation Database" ],
+    "link_check": {
+    	"destination": "example.com",
+    	"resolves_to_full_text": false,
+    	"full_text": true,
+        "notes": "can find article using a query of only its title"
+    }
+}
+                    </code></pre>
+
+                    <aside class="notes" data-markdown>
+Here's an example JSON record from the project. It shows the Summon metadata of the original search result, like content type and various boolean properties. Down at the bottom, you can see the "link check" annotation that's populated with the result of my manual test.
+
+This project is on GitHub by the way, if other libraries want to conduct the same study. There's a link to this presentation and to the code on my final slide.
+                    </aside>
+                </section>
 
 				<section>
 					<h2>results</h2>
 					<div class="results-chart"></div>
 					<p>Only 78.5% worked 😡<br><span class="fragment">eventually located full text for 54.5% of broken links.</span></p>
 					<p><small>±3.72% with a 95% confidence level, N = 469</small></p>
+
+                    <aside class="notes" data-markdown>
+The results of the study were very disappointing to me. Only 78.5% of links resolved, with a rather small margin of error. There were distinct trends in terms of what types of records experienced linking failures. You can see that Magazine articles, content from Nexis Uni—product from Lexis Nexis aimed at colleges—, and newspaper articles faired very poorly. Journal articles were about average while ProQuest content and Reference materials did better than average.
+
+But the most striking contrast I found was between OpenURL and direct linking, which I've placed on the right side of this graph. Summon records have a "LinkModel" property with one of these two values. OpenURL means that metadata is passed to our link resolver before you're sent to the content provider, while a "direct link" means that the DL index itself has some form of absolute URL stored for the item. Almost all the broken links were OpenURL ones and OpenURL links failed about 63% of the time. Meanwhile, DirectLinks were almost 98% successful.
+
+A small silver lining to this is that I was able to eventually find full text for about half of the broken links. For instance, title-level links are technically not to the full text so I would categorize them as broken, but I could almost always use the journal's index to drill down to the desired article. However, I don't necessarily think it's fair to assume that our patrons would be as successful at locating full text and there's still an inconvenience introduced, this is contributing to the usability gap that makes our DL feel worse to patrons than Google or even Google scholar.
+                    </aside>
 				</section>
 
 				<section>
@@ -104,26 +180,50 @@
 							<li class="fragment">platforms (Nexis Uni)</li>
 						</ul>
 					</ul>
+
+                    <aside class="notes" data-markdown>
+So what are we doing to address our broken link problem?
+
+For the errors that are our fault, like EZproxy or knowledge base misconfiguration, it's usually a one-time fix and these errors have largely disappeared now I know to be more diligent about them.
+
+We're working with Ex Libris' support to fix broken links. At the scale of the DL index, fixing broken records one-by-one is barely worth our time. Instead, we're trying to find systemtic fixes that erase whole classes of problems for numerous records. For instance, for some OpenURL linking strategies we've started sending only _numeric_ metadata like volume, issue, ISSN, and date. It's harder to have a disagreement about numeric values, while titles are a common source of problems due to disagreements or character encoding issues. Paradoxically, we can make some OpenURLs _better_ by sending _less_ metadata.
+
+We're also trying to cut toxic links our of our life by identifying problematic content types and providers. We've removed Book Reviews from our default library home page search box because they were among the worst performing content types and we also noticed a usability issue; patrons would often search for a book but receive several reviews that share its title, whcih was confusing and frustrating. Finally, we're considering dropping our Nexis Uni subscription due to its poor performance and awful OpenURL implementation.
+                    </aside>
 				</section>
 
 				<section>
 					<h1>Problem Origins</h1>
 					<img src="img/standoff.gif" alt="Scene from The Office where Dwight, Andy, & Michael are in a finger guns standoff">
 					<p style="font-size:120%"><b>the library, the discovery layer, content providers, metadata providers</b></p>
+
+                    <aside class="notes" data-markdown>
+The challenge is, we need to work together with several different stakeholders who are not always on the same page. When the problem is caused by me or the discovery layer, it's often easy to fix. But the matrix of discovery layer, content provider, and metadata provider cannot always be brought into agreement and in fact some of these companies have competing interests and they've proven themselves to be uncooperative. The well-known case of MLA International Bibliography choosing to share its metadata exclusively with EBSCO comes to mind.
+                    </aside>
 				</section>
 
 				<section>
 					<h2>why it's hopeless</h2>
 					<ul>
 						<li>the finite nature of human life and patience</li>
-						<li class="fragment">vendors won't vet each others' linking & blame each other rather than work to mutual solutions (<a href="https://www.niso.org/standards-committees/odi">ODI</a>)</li>
 						<li class="fragment">their incentive is to make <b>larger and larger</b> indexes when they can't even test if they're functional
 							<ul>
-								<li class="fragment">size is itself a technical obstacle to integrity</li>
-								<li class="fragment">breadth of potential errors is such that human intervention will often be necessary</li>
+								<li class="fragment">size is itself an obstacle to integrity</li>
+								<li class="fragment">the breadth of potential errors is such that human intervention is necessary</li>
 							</ul>
 						</li>
+						<li class="fragment">vendors won't vet each others' linking & blame each other rather than work to mutual solutions (<a href="https://www.niso.org/standards-committees/odi">ODI</a>)</li>
 					</ul>
+
+                    <aside class="notes" data-markdown>
+...and that's why I fundamentally believe that fixing discovery layer linking is hopeless. I don't have enough time to discover, much less fix, every bad metadata record. I have great respect for the Ex Libris support team but they are at least as overworked as I am.
+
+DLs want to brag about having the largest index with the most content represented but they can't even test if these indexes are functional.
+Size itself is actually an obstacle to the integrity of the index. How can DL companies test all these links on every update, whether the update is to the index or a supporting link resolver or even a content provider's database platform?
+As indicated by my gruesome list of linking errors, the breadth of problems is so wide and diagnosing is so difficult that human intervention is almost certainly required. You cannot, for instance, just check six billion links for a 200 HTTP status code.
+
+Underlying all of this is a stubborn insistence on not cooperating with other vendors. I can't tell you how many support tickets I've been on where I'm playing telephone with two support teams that are convinced the other one's platform is the issue, yet neither will give each other enough access to truly diagnose the issue. Vendors have made it impossible to vet linking strategies by not sharing all their metadata. The Open Discovery Initiative is a great step to encourage cooperation and I admire their work, but I think major companies need to be penalized and pressured to work together.
+                    </aside>
 				</section>
 
 				<section>
@@ -139,7 +239,15 @@
 						<li class="fragment">resolvers fail gracelessly</li>
 						<!-- @TODO find some examples from support tickets? -->
 					</ul>
-					<p><small>Aside: I actually like OpenURL, it's an elegant standard being asked to do too much and implementations are failing.</small></p>
+					<aside><small>I actually like OpenURL, it's an elegant standard being asked to do too much and implementations are failing.</small></aside>
+
+                    <aside class="notes" data-markdown>
+OpenURL is being asked to fill this cooperation gap and it's just not up to the task. There's an assumption that everyone has access to accurate metadata which is just not true. Some classes of problem, like granularity mismatch or title disagreement, relate to differing paradigms of describing content and we can't say for sure that one side is right.
+
+What's worse, _even if_ everyone had perfect metadata, there are platform-specific limitations in how content providers receive OpenURL links. Take Nexis Uni for example: they use only publication and title metadata, nothing else. So it's impossible to uniquely identify, for instance, a specific instance of a regular newspaper column that is repeatedly published under the same name.
+
+Content providers also have no unified way of handling broken links, as if they never expected them to happen. Sometimes you end up on an arcane OpenURL form that most patrons cannot parse, other times you get a useless 404 page. Platforms could be much smarter about guessing at the content being described when an OpenURL doesn't resolve.
+                    </aside>
 				</section>
 
 				<section>
@@ -150,7 +258,11 @@
 							—<cite>"Measuring Journal Linking Success from a Discovery Service" Stuart, K., Varnum, K., & Ahronheim, J. (2015)</cite>
 						</footer>
 					</blockquote>
-					<!-- perhaps have the aside about expending my labor to fix vendor problems here -->
+
+                    <aside class="notes" data-markdown>
+I'd like to close by referencing a University of Michigan study from 2015, where they had a much larger sample size and came to almost exactly the same conclusions that I did. They found that 95% of DirectLinks worked, while only 60% of OpenURLs did, with a 20% overall failure rate. Five years later, nothing's changed.
+Now my data does come from before Summon switched to CDI and I want to rerun my test when I can find the time, but I don't have a lot of confidence that fundamental improvements have been made.
+                    </aside>
 				</section>
 
 				<section>
@@ -189,14 +301,17 @@
 			// make the "why links break" list items wild
 			document.querySelectorAll('.js-reasons-list li').forEach((li, idx) => {
 				// random rotate, translate on items, need translateZ to get text to show
-				if (idx > 1) li.style.transform = `rotate(${[1, -1][randIntBetween(0, 1)] * randIntBetween(1, 30)}deg) translateZ(1px)`
-				if (idx > 2) li.style.transform += ` translate(${randIntBetween(1, 30)}px, ${randIntBetween(1, 30)}px)`
+				if (idx > 1) li.style.transform = `rotate(${[1, -1][randIntBetween(0, 1)] * randIntBetween(1, 15)}deg) translateZ(1px)`
+				if (idx > 2) li.style.transform += ` translate(${randIntBetween(1, 20)}px, ${randIntBetween(1, 20)}px)`
 				// spONgEbOb TExT
 				if (idx > 4) {
-					let t = li.textContent
-					li.textContent = t.split('').map(char => {
-						return (randIntBetween(0, 1) ? char.toUpperCase() : char.toLowerCase())
-					}).join('')
+					let el = li.firstChild
+                    while (el) {
+                        el.textContent = el.textContent.split('').map(char => {
+    						return (randIntBetween(0, 1) ? char.toUpperCase() : char.toLowerCase())
+    					}).join('')
+                        el = el.nextSibling
+                    }
 				}
 			})
 		</script>
