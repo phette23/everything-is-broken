@@ -1,3 +1,6 @@
+.reveal abbr:hover {
+  cursor: help; }
+
 .reveal b {
   font-weight: bold; }
 

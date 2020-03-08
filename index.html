@@ -68,6 +68,7 @@ Big shout out to Robery Hoyt & Fairfield University, who first developed this ap
 						<li class="fragment">we <strong>misconfigured our knowledge base</strong>, our rights statements are wrong</li>
 						<li class="fragment">we deleted a catalog record but our <strong>local holdings haven't synced</strong> with the DL index yet</li>
 					</ul>
+					<p style="margin:40px 0 0;"><small><a href="javascript:void();" title="make the text aligned normally" onclick="[].forEach.call(document.querySelectorAll('.js-reasons-list li'), (li)=>{ li.style.transform = 'none'; li.style.textTransform = 'lowercase' }); return false">stop being weird</a></small></p>
 
                     <aside class="notes" data-markdown>
 So why do links break? I've collected a list of common problems from our reports and there are a lot so I'm going to speed through them.
@@ -116,7 +117,7 @@ I wrote a series of Node scripts to help me investigate. I took thousands of act
 					<img src="img/broken-links-cli.png" alt="Summon broken link review in action">
 
                     <aside class="notes" data-markdown>
-Here's what it looks like as I run the project. You can see the title and author of the first query's first result are printed out and I've entered in the destination URL that Summon took me to, then a couple boolean values describing whether it was the full text and whether I could _eventually_ find the full text from the destination URL. When I finish entering data for the first result, the title and author of the second are printed out and its URL is opened in a new browser window.
+Here's what it looks like as I run the project. You can see the title and author of the first query's first result are printed out and I've entered the destination URL that Summon took me to, then a couple boolean values describing whether it was the full text and whether I could _eventually_ find the full text from the destination URL. When I finish entering data for the first result, the title and author of the second are printed out and its URL is opened in a new browser window.
                     </aside>
 				</section>
 
@@ -179,6 +180,7 @@ A small silver lining to this is that I was able to eventually find full text fo
 							<li class="fragment">content types (Book Reviews)</li>
 							<li class="fragment">platforms (Nexis Uni)</li>
 						</ul>
+						<li class="fragment">re-run broken link study under <abbr title="Central Discovery Index">CDI</abbr></li>
 					</ul>
 
                     <aside class="notes" data-markdown>
@@ -186,9 +188,11 @@ So what are we doing to address our broken link problem?
 
 For the errors that are our fault, like EZproxy or knowledge base misconfiguration, it's usually a one-time fix and these errors have largely disappeared now I know to be more diligent about them.
 
-We're working with Ex Libris' support to fix broken links. At the scale of the DL index, fixing broken records one-by-one is barely worth our time. Instead, we're trying to find systemtic fixes that erase whole classes of problems for numerous records. For instance, for some OpenURL linking strategies we've started sending only _numeric_ metadata like volume, issue, ISSN, and date. It's harder to have a disagreement about numeric values, while titles are a common source of problems due to disagreements or character encoding issues. Paradoxically, we can make some OpenURLs _better_ by sending _less_ metadata.
+We're working with Ex Libris' support to fix broken links. At the scale of the DL index, fixing broken records one-by-one is not worth our time. Instead, we try to find systemtic fixes that erase a whole class of problem affecting numerous records. For instance, for some OpenURL linking strategies we've started sending only _numeric_ metadata like volume, issue, ISSN, and date. It's harder to have a disagreement about numeric values, while titles are a common source of problems due to disagreements or character encoding issues. Paradoxically, we can make some OpenURLs _better_ by sending _less_ metadata.
 
-We're also trying to cut toxic links our of our life by identifying problematic content types and providers. We've removed Book Reviews from our default library home page search box because they were among the worst performing content types and we also noticed a usability issue; patrons would often search for a book but receive several reviews that share its title, whcih was confusing and frustrating. Finally, we're considering dropping our Nexis Uni subscription due to its poor performance and awful OpenURL implementation.
+We're also trying to cut toxic links our of our life by identifying problematic content types and providers. We've removed Book Reviews from our default library home page search box because they were among the worst performing content types and we also noticed a usability issue; patrons would often search for a book but receive several reviews that share its title, whcih was confusing and frustrating. We're considering dropping our Nexis Uni subscription due to its poor performance and awful OpenURL implementation.
+
+Finally, I'd like to re-run my broken link study now that Summon is using an new index named CDI, though I do not have much confidence that it will substantially improve the situation.
                     </aside>
 				</section>
 
@@ -198,7 +202,7 @@ We're also trying to cut toxic links our of our life by identifying problematic 
 					<p style="font-size:120%"><b>the library, the discovery layer, content providers, metadata providers</b></p>
 
                     <aside class="notes" data-markdown>
-The challenge is, we need to work together with several different stakeholders who are not always on the same page. When the problem is caused by me or the discovery layer, it's often easy to fix. But the matrix of discovery layer, content provider, and metadata provider cannot always be brought into agreement and in fact some of these companies have competing interests and they've proven themselves to be uncooperative. The well-known case of MLA International Bibliography choosing to share its metadata exclusively with EBSCO comes to mind.
+The challenge is, we need to work together with several different stakeholders who are not always on the same page. When the problem is caused by us or the discovery layer, it's often easy to fix. But the matrix of discovery layer, content provider, and metadata provider cannot always be brought into agreement and in fact some of these companies have competing interests and they've proven themselves to be uncooperative. The well-known case of MLA International Bibliography choosing to share its metadata exclusively with EBSCO comes to mind.
                     </aside>
 				</section>
 
@@ -206,7 +210,7 @@ The challenge is, we need to work together with several different stakeholders w
 					<h2>why it's hopeless</h2>
 					<ul>
 						<li>the finite nature of human life and patience</li>
-						<li class="fragment">their incentive is to make <b>larger and larger</b> indexes when they can't even test if they're functional
+						<li class="fragment">no one can guarantee DL indexes/linking function
 							<ul>
 								<li class="fragment">size is itself an obstacle to integrity</li>
 								<li class="fragment">the breadth of potential errors is such that human intervention is necessary</li>
@@ -216,13 +220,13 @@ The challenge is, we need to work together with several different stakeholders w
 					</ul>
 
                     <aside class="notes" data-markdown>
-...and that's why I fundamentally believe that fixing discovery layer linking is hopeless. I don't have enough time to discover, much less fix, every bad metadata record. I have great respect for the Ex Libris support team but they are at least as overworked as I am.
+...and that's why I fundamentally believe that fixing discovery layer linking is hopeless. I don't have enough time to discover, much less fix, every metadata error. I have great respect for the Ex Libris support team but they are at least as overworked as I am.
 
-DLs want to brag about having the largest index with the most content represented but they can't even test if these indexes are functional.
-Size itself is actually an obstacle to the integrity of the index. How can DL companies test all these links on every update, whether the update is to the index or a supporting link resolver or even a content provider's database platform?
-As indicated by my gruesome list of linking errors, the breadth of problems is so wide and diagnosing is so difficult that human intervention is almost certainly required. You cannot, for instance, just check six billion links for a 200 HTTP status code.
+DLs brag about the size of their index but they can't even test if their linking is functional and full text is retrievable in all cases.
+Size itself is actually an obstacle to the integrity of the index. How can DL companies test all these links on every update, whether the update is to an index or a supporting link resolver or even a content provider's database platform?
+As indicated by my gruesome list of linking errors, the breadth of problems is so wide and diagnosis so difficult that human intervention is almost certainly required. This is far more involved than checking for a 200 HTTP status code.
 
-Underlying all of this is a stubborn insistence on not cooperating with other vendors. I can't tell you how many support tickets I've been on where I'm playing telephone with two support teams that are convinced the other one's platform is the issue, yet neither will give each other enough access to truly diagnose the issue. Vendors have made it impossible to vet linking strategies by not sharing all their metadata. The Open Discovery Initiative is a great step to encourage cooperation and I admire their work, but I think major companies need to be penalized and pressured to work together.
+Underlying all of this is vendors' insistence on uncooperation. I can't tell you how many support tickets I've been on where I'm playing telephone with two support teams that are convinced the other one's platform is the issue, yet neither will give each other enough access to truly diagnose the issue. Vendors have made it impossible to vet linking strategies by not sharing all their metadata. The Open Discovery Initiative is a great step to encourage cooperation and I admire their work, but ODI relies on us to penalize non-cooperation and pressure vendors to work together.
                     </aside>
 				</section>
 
@@ -237,7 +241,6 @@ Underlying all of this is a stubborn insistence on not cooperating with other ve
 							</ul>
 						</li>
 						<li class="fragment">resolvers fail gracelessly</li>
-						<!-- @TODO find some examples from support tickets? -->
 					</ul>
 					<aside><small>I actually like OpenURL, it's an elegant standard being asked to do too much and implementations are failing.</small></aside>
 
@@ -266,7 +269,7 @@ Now my data does come from before Summon switched to CDI and I want to rerun my 
 				</section>
 
 				<section>
-					<h2>References & Links</h2>
+					<h2>Links & References</h2>
 					<ul>
 						<li><strong>These slides: <a href="https://phette.net/broken">phette.net/broken</a></strong></li>
 						<li>I'm <span class="bscode">@phette23</span> everywhere (Gmail, Twitter, GitHub)</li>

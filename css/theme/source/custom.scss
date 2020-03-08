@@ -1,6 +1,10 @@
 // overrides, utilities, etc.
 
 .reveal {
+    abbr:hover {
+        cursor: help;
+    }
+
     b {
         font-weight: bold;
     }
