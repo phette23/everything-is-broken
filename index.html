@@ -71,18 +71,18 @@ Big shout out to Robery Hoyt & Fairfield University, who first developed this ap
 					<p style="margin:40px 0 0;"><small><a href="javascript:void();" title="make the text aligned normally" onclick="[].forEach.call(document.querySelectorAll('.js-reasons-list li'), (li)=>{ li.style.transform = 'none'; li.style.textTransform = 'lowercase' }); return false">stop being weird</a></small></p>
 
                     <aside class="notes" data-markdown>
-So why do links break? I've collected a list of problems from our reports and there are a lot so I'm going to speed through them.
+So why do links break? I've collected a list of common problems from our reports and there are a lot so I'm going to speed through them.
 - inaccurate metadata in the DL index
 - inaccurate metadata in the content provider database, causing a mismatch with the DL index
 - a disagreement between DL index and content provider over geuinely debatable metadata values, such as the title of a book review. Should it be "Review: Book Title" or simply "Book Title"?
 - a granularity mismatch: the DL index and the content provider disagree about whether something should be one or many items. Consider a "letters to the editor" segment; the DL might have one item while the content provider has a distinct article for each letter.
 - the content provider can have a poor openURL implementation, causing a link to fail due to unused or misused metadata
-- title-level links don't go to the full text. While it may be easy for some researchers to navigate from there, most users aren't expecting this. They clicked a link that said "full text" not one that said "I hope you memorized the article's volume and issue cuz you're gonna need them"
+- title-level links do not go to the full text. Our users land on a journal index, and while it's easy for some researchers to navigate from there, most users aren't expecting this. They clicked something that said "full text" not a link that said "I hope you memorized the article's volume and issue cuz you're gonna need them"
 - missing content, the content provider doesn't have an item even though it should
 - an item is under embargo and the DL's naïve knowledge base doesn't account for that
 - we misconfigured EZproxy. Yeah, sometimes we're the ones that screw up.
 - we misconfigured our knowledge base, our rights statements are wrong
-- we deleted a catalog record but our local holdings haven't synced with the DL index yet. We manually sync deletions and it can take up a month to have them reflected.
+- we deleted a catalog record but our local holdings haven't synced with the DL index yet. We manually sync deletions and it can take up a month to have them reflected in the DL.
                     </aside>
 				</section>
 
@@ -117,7 +117,7 @@ I wrote a series of Node scripts to help me investigate. I took thousands of act
 					<img src="img/broken-links-cli.png" alt="Summon broken link review in action">
 
                     <aside class="notes" data-markdown>
-Here's what it looks like as I run the project. You can see the title and author of the first query's first result are printed out and I've entered the destination URL that Summon took me to, then a couple boolean values describing whether it was the full text and whether I could _eventually_ find the full text. When I finish entering the first result, the title and author of the second are printed out and its URL is opened in a new browser window.
+Here's what it looks like as I run the project. You can see the title and author of the first query's first result are printed out and I've entered the destination URL that Summon took me to, then a couple boolean values describing whether it was the full text and whether I could _eventually_ find the full text from the destination URL. When I finish entering data for the first result, the title and author of the second are printed out and its URL is opened in a new browser window.
                     </aside>
 				</section>
 
@@ -148,7 +148,7 @@ Here's what it looks like as I run the project. You can see the title and author
                     <aside class="notes" data-markdown>
 Here's an example JSON record from the project. It shows the Summon metadata of the original search result, like content type and various boolean properties. Down at the bottom, you can see the "link check" annotation that's populated with the result of my manual test.
 
-This project is on GitHub by the way, if other libraries want to conduct the same study. There's a link on my final slide.
+This project is on GitHub by the way, if other libraries want to conduct the same study. There's a link to this presentation and to the code on my final slide.
                     </aside>
                 </section>
 
@@ -159,11 +159,11 @@ This project is on GitHub by the way, if other libraries want to conduct the sam
 					<p><small>±3.72% with a 95% confidence level, N = 469</small></p>
 
                     <aside class="notes" data-markdown>
-The results of the study were very disappointing to me. Only 78.5% of links resolved to full text. There were distinct trends in terms of what types of records experienced linking failures: Magazine articles, content from Nexis Uni—a product from Lexis Nexis aimed at colleges—and newspaper articles faired poorly. Journal articles were about average while ProQuest content and Reference materials did better than average.
+The results of the study were very disappointing to me. Only 78.5% of links resolved, with a rather small margin of error. There were distinct trends in terms of what types of records experienced linking failures. You can see that Magazine articles, content from Nexis Uni—product from Lexis Nexis aimed at colleges—, and newspaper articles faired very poorly. Journal articles were about average while ProQuest content and Reference materials did better than average.
 
-But the most striking contrast I found was between OpenURL and direct linking, which I've placed on the right side of this graph. Summon records have a "LinkModel" property with one of these two values. OpenURL means that metadata is passed to our link resolver which relays you to the content provider, while a "direct link" means that the DL index itself has some form of absolute URL stored for the item. OpenURL links failed about 63% of the time, while DirectLinks were nearly 98% successful.
+But the most striking contrast I found was between OpenURL and direct linking, which I've placed on the right side of this graph. Summon records have a "LinkModel" property with one of these two values. OpenURL means that metadata is passed to our link resolver before you're sent to the content provider, while a "direct link" means that the DL index itself has some form of absolute URL stored for the item. Almost all the broken links were OpenURL ones and OpenURL links failed about 63% of the time. Meanwhile, DirectLinks were almost 98% successful.
 
-A small silver lining to this outcome is that I was able to eventually find full text for a little over half of the broken links. For instance, title-level links are technically not to the full text so I would categorize them as broken, but I could often use the journal's home page to drill down to the desired article. However, I don't necessarily think it's fair to assume that our patrons would be as successful at locating full text and there's still an inconvenience introduced that's contributing to the usability gap that makes our DL feel worse than Google or even Google scholar.
+A small silver lining to this is that I was able to eventually find full text for about half of the broken links. For instance, title-level links are technically not to the full text so I would categorize them as broken, but I could almost always use the journal's index to drill down to the desired article. However, I don't necessarily think it's fair to assume that our patrons would be as successful at locating full text and there's still an inconvenience introduced, this is contributing to the usability gap that makes our DL feel worse to patrons than Google or even Google scholar.
                     </aside>
 				</section>
 
@@ -186,7 +186,7 @@ A small silver lining to this outcome is that I was able to eventually find full
                     <aside class="notes" data-markdown>
 So what are we doing to address our broken link problem?
 
-For the errors that are our fault, like EZproxy or knowledge base misconfiguration, it's a one-time fix and these errors have largely disappeared now I know to be more diligent about them.
+For the errors that are our fault, like EZproxy or knowledge base misconfiguration, it's usually a one-time fix and these errors have largely disappeared now I know to be more diligent about them.
 
 We're working with Ex Libris' support to fix broken links. At the scale of the DL index, fixing broken records one-by-one is not worth our time. Instead, we try to find systemtic fixes that erase a whole class of problem affecting numerous records. For instance, for some OpenURL linking strategies we've started sending only _numeric_ metadata like volume, issue, ISSN, and date. It's harder to have a disagreement about numeric values, while titles are a common source of problems due to disagreements or character encoding issues. Paradoxically, we can make some OpenURLs _better_ by sending _less_ metadata.
 
@@ -202,7 +202,7 @@ Finally, I'd like to re-run my broken link study now that Summon is using an new
 					<p style="font-size:120%"><b>the library, the discovery layer, content providers, metadata providers</b></p>
 
                     <aside class="notes" data-markdown>
-The challenge is, we need to work together with several different stakeholders who are not always on the same page. When the problem is caused by us or the discovery layer, it's often easy to fix. But the matrix of discovery layer, content provider, and metadata provider cannot always be brought into agreement and in fact some of these companies have competing interests and they've proven to be uncooperative. The well-known case of MLA International Bibliography choosing to share its metadata exclusively with EBSCO comes to mind.
+The challenge is, we need to work together with several different stakeholders who are not always on the same page. When the problem is caused by us or the discovery layer, it's often easy to fix. But the matrix of discovery layer, content provider, and metadata provider cannot always be brought into agreement and in fact some of these companies have competing interests and they've proven themselves to be uncooperative. The well-known case of MLA International Bibliography choosing to share its metadata exclusively with EBSCO comes to mind.
                     </aside>
 				</section>
 
@@ -226,7 +226,7 @@ DLs brag about the size of their index but they can't even test if their linking
 Size itself is actually an obstacle to the integrity of the index. How can DL companies test all these links on every update, whether the update is to an index or a supporting link resolver or even a content provider's database platform?
 As indicated by my gruesome list of linking errors, the breadth of problems is so wide and diagnosis so difficult that human intervention is almost certainly required. This is far more involved than checking for a 200 HTTP status code.
 
-Underlying all of this is vendors' insistence on noncooperation. I can't tell you how many support tickets I've been on where I'm playing telephone with two support teams that are convinced the other one's platform is the issue, yet neither has enough access to truly diagnose the issue. Vendors have made it impossible to vet OpenURL links by not sharing all their metadata. I greatly admire The Open Discovery Initiative, it's a great step to encourage standardization and cooperation, but ODI ultimately relies on libraries to pressure vendors to work together.
+Underlying all of this is vendors' insistence on uncooperation. I can't tell you how many support tickets I've been on where I'm playing telephone with two support teams that are convinced the other one's platform is the issue, yet neither will give each other enough access to truly diagnose the issue. Vendors have made it impossible to vet linking strategies by not sharing all their metadata. The Open Discovery Initiative is a great step to encourage cooperation and I admire their work, but ODI relies on us to penalize non-cooperation and pressure vendors to work together.
                     </aside>
 				</section>
 
@@ -245,11 +245,11 @@ Underlying all of this is vendors' insistence on noncooperation. I can't tell yo
 					<aside><small>I actually like OpenURL, it's an elegant standard being asked to do too much and implementations are failing.</small></aside>
 
                     <aside class="notes" data-markdown>
-OpenURL is being asked to fill this cooperation gap and it's just not up to the task. There's a faulty assumption that everyone has access to accurate metadata—or even just _the same_ metadata whether it's accurate or not. Because some classes of problem, like granularity mismatch or title disagreement, relate to differing paradigms of description and we can't say for sure what is right.
+OpenURL is being asked to fill this cooperation gap and it's just not up to the task. There's an assumption that everyone has access to accurate metadata which is just not true. Some classes of problem, like granularity mismatch or title disagreement, relate to differing paradigms of describing content and we can't say for sure that one side is right.
 
-What's worse, _even if_ everyone had perfect metadata, there are platform-specific limitations in how content providers handle OpenURL links. Take Nexis Uni for example: they use only publication and title, nothing else. So it's impossible to uniquely identify, for instance, a specific instance of a regular newspaper column that is repeatedly published under the same name.
+What's worse, _even if_ everyone had perfect metadata, there are platform-specific limitations in how content providers receive OpenURL links. Take Nexis Uni for example: they use only publication and title metadata, nothing else. So it's impossible to uniquely identify, for instance, a specific instance of a regular newspaper column that is repeatedly published under the same name.
 
-Content providers also don't have a consistent way to handle broken links, as if they never expected them to happen. Sometimes you end up on an arcane OpenURL form that most patrons cannot parse, other times you get a useless 404 page. Platforms could be much smarter about guessing the content being described when an OpenURL fails.
+Content providers also have no unified way of handling broken links, as if they never expected them to happen. Sometimes you end up on an arcane OpenURL form that most patrons cannot parse, other times you get a useless 404 page. Platforms could be much smarter about guessing at the content being described when an OpenURL doesn't resolve.
                     </aside>
 				</section>
 
@@ -263,7 +263,8 @@ Content providers also don't have a consistent way to handle broken links, as if
 					</blockquote>
 
                     <aside class="notes" data-markdown>
-I'd like to close by referencing a University of Michigan study from 2015, where they had a much larger sample size than mine and came to almost exactly the same conclusions that I did. They found that 95% of DirectLinks worked, while only 60% of OpenURLs did, with a 20% overall failure rate. Five years later, nothing's changed.
+I'd like to close by referencing a University of Michigan study from 2015, where they had a much larger sample size and came to almost exactly the same conclusions that I did. They found that 95% of DirectLinks worked, while only 60% of OpenURLs did, with a 20% overall failure rate. Five years later, nothing's changed.
+Now my data does come from before Summon switched to CDI and I want to rerun my test when I can find the time, but I don't have a lot of confidence that fundamental improvements have been made.
                     </aside>
 				</section>
 
